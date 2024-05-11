@@ -18,4 +18,5 @@ return array(
     'Fig\\Http\\Message\\' => array($vendorDir . '/fig/http-message-util/src'),
     'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
     'Brick\\Math\\' => array($vendorDir . '/brick/math/src'),
+    '' => array($baseDir . '/src'),
 );
