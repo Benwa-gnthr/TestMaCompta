@@ -22,7 +22,7 @@ require dirname(__DIR__) . '/src/Controller/compteController.php';
 $ecritureController = new EcritureController();
 $compteController = new compteController();
 
-// Ecriture Routes
+//Ecriture Routes
 $app->get('/comptes/{uuid}/ecritures', $ecritureController->getEcriture(...));
 
 $app->post('/comptes/{uuid}/ecritures', $ecritureController->postEcriture(...));
@@ -34,6 +34,14 @@ $app->delete('/comptes/{compte_uuid}/ecritures/{ecriture_uuid}', $ecritureContro
 //Compte Routes
 
 $app->get('/comptes/{uuid}', $compteController->getCompte(...));
+
+$app->post('/comptes', $compteController->postCompte(...));
+
+$app->put('/comptes/{uuid}', $compteController->putCompte(...));
+
+$app->delete('/comptes/{uuid}', $compteController->deleteCompte(...));
+
+$app->get('/comptes', $compteController->getAllCompteAndEcriture(...));
 
 
 $app->run(); 
