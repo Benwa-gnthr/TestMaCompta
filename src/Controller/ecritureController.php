@@ -8,25 +8,29 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Ramsey\Uuid\Uuid;
 use App\Database;
+use PDO;
 
 class EcritureController
 {
     // Exercice 2
     public function getEcriture(Request $request, Response $response, array $args): Response
     {
-        $uuid = $args['uuid'];
+        $compteUuid = $args['uuid'];
 
-        $ecritures = [
-            ['label' => 'Libellé de test 2'],
-            ['Date' => '2 janvier 2015']
-        ];
+        $database = new Database();
     
-        $responseData = ['items' => $ecritures];
-        $response->getBody()->write(json_encode($responseData));
-    
-        return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus(200);
+        $pdo = $database->getConnection();
+
+        $stmt = $pdo->prepare("SELECT * FROM ecritures WHERE compte_uuid = :compte_uuid");
+
+        $stmt->bindParam(':compte_uuid', $compteUuid);
+
+        $stmt->execute();
+
+        $ecritures = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $response->getBody()->write(json_encode(['items' => $ecritures]));
+        return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
     }
 
     // Exercice 3
